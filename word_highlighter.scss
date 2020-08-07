@@ -1,0 +1,37 @@
+div.z-padtop2.xgray {
+    & > span {
+        display: inline-block;
+        margin-top: 0.5em;
+        padding: 0.2em;
+        margin-right: 0.5em;
+        // border: solid thin rgba(255, 255, 255, 0.2);
+        border-radius: 0.2em;
+        background: rgba(0, 0, 0, 0.2);
+    }
+    .genre {
+        color: #0AA;
+        &:not(:last-child):after {
+            color: #033;
+            content: '+';
+            margin-left: 0.4em;
+            margin-right: 0.4em;
+        }
+    }
+}
+
+.z-list {
+    border-left: transparent medium solid;
+    padding-left: 5px;
+    &.word_high {
+        border-left-color: #080;
+        div.z-padtop2.xgray span.words {
+            color: #080;
+        }
+    }
+    &.word_low {
+        border-left-color: #800;
+        div.z-padtop2.xgray span.words {
+            color: #800;
+        }
+    }
+}
