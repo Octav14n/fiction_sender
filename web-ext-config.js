@@ -7,14 +7,14 @@ module.exports = {
         'web-ext.js',
         '*.zip',
         'icon_src',
-        'icon/*.svg',
     ],
     build: {
         overwriteDest: true,
     },
     run: {
         startUrl: [
-            'https://www.fanfiction.net/j/0/4/1/'
+            'https://www.fanfiction.net/j/0/4/1/',
+            'https://m.fanfiction.net/j/?s=4&cid=0&l=1',
         ],
     }
 }

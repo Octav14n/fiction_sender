@@ -1,4 +1,4 @@
-div.z-padtop2.xgray {
+div.z-padtop2.xgray, div.gray {
     & > span {
         display: inline-block;
         margin-top: 0.5em;
@@ -19,18 +19,18 @@ div.z-padtop2.xgray {
     }
 }
 
-.z-list {
+.z-list, .bs {
     border-left: transparent medium solid;
     padding-left: 5px;
     &.word_high {
         border-left-color: #080;
-        div.z-padtop2.xgray span.words {
+        span.words {
             color: #080;
         }
     }
     &.word_low {
         border-left-color: #800;
-        div.z-padtop2.xgray span.words {
+        span.words {
             color: #800;
         }
     }
