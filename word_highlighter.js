@@ -40,7 +40,7 @@ for (const meta_parent of metadatas) {
                     for (let genre of genres) {
                         let e = document.createElement('span');
                         e.classList.add('genre');
-                        e.appendChild(document.createTextNode(genre));
+                        e.appendChild(document.createTextNode(` ${genre} `));
                         elem.appendChild(e);
                     }
                 } else

@@ -13,8 +13,6 @@ div.z-padtop2.xgray, div.gray {
         &:not(:last-child):after {
             color: #033;
             content: '+';
-            margin-left: 0.4em;
-            margin-right: 0.4em;
         }
     }
 }
