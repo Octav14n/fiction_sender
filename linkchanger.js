@@ -59,7 +59,7 @@ RegExp.escape= function(s) {
         },
     ];
     for (let domain of supported_domain_paths) {
-        domain.domain_regex = new RegExp(`^(?:www\\.)?${RegExp.escape(domain.domain)}$`, 'i');
+        domain.domain_regex = new RegExp(`^(?:(?:www|m)\\.)?${RegExp.escape(domain.domain)}$`, 'i');
         if (!domain.path instanceof RegExp) {
             domain.path = new RegExp('^/' + RegExp.escape(path));
         }
