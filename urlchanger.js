@@ -26,7 +26,11 @@ for (let supported_domain_path of supported_domain_paths) {
 console.log('supported domains: ', supported_domain_paths);
 
 let start_download = function(data) {
-    browser.history.addUrl({url: data.url});
+    try {
+        browser.history.addUrl({url: data.url});
+    } catch {
+        // Ignore if history is not accessible. (Firefox for Android for example)
+    }
     if (this.xhr === undefined) {
         this.xhr = new XMLHttpRequest();
         this.xhr.onreadystatechange = function () {
