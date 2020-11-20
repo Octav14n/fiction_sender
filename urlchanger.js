@@ -17,6 +17,8 @@ let supported_domain_paths = [
     {'domain': 'hentai-foundry.com', 'path': 'stories/'},
     {'domain': 'hpfanficarchive.com', 'path': 'stories/viewstory.php'},
     {'domain': 'tthfanfic.org', 'path': 'Story-'},
+    {'domain': 'forum.questionablequesting.com', 'path': 'threads/'},
+    {'domain': 'royalroad.com', 'path': 'fiction/'},
 ];
 for (let supported_domain_path of supported_domain_paths) {
     supported_domain_path.domain_regex = new RegExp(`^(?:www\\.)?${RegExp.escape(supported_domain_path.domain)}$`, 'i');

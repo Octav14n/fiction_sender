@@ -15,6 +15,8 @@ module.exports = {
         startUrl: [
             'https://www.fanfiction.net/j/0/4/1/',
             'https://m.fanfiction.net/j/?s=4&cid=0&l=1',
+            'https://forum.questionablequesting.com/threads/with-this-ring-young-justice-si-thread-fourteen.8938/',
+            'https://www.royalroad.com/fiction/21501/dco--dungeon-core-online',
         ],
     }
 }
