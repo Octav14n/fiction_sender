@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Fiction Sender",
-  "version": "1.13",
+  "version": "1.14",
   "applications": {
     "gecko": {
       "id": "fiction_sender@schnuff.eu"
