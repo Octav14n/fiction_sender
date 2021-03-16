@@ -24,8 +24,8 @@ RegExp.escape= function(s) {
     let supported_domain_paths = [
         {
             'domain': 'fanfiction.net',
-            'path': new RegExp('^/s/\\d+/1/'),
-            'place_img': function (image, link) {
+            'path': /^\/s\/\\d+\/1\//,
+            'place_img': (image, link) => {
                 if (link.childNodes.length > 0 && link.childNodes[0].nodeType === Node.ELEMENT_NODE)
                     link.childNodes[0].style.clear = 'none';
                 link.parentNode.insertBefore(image, link);
@@ -38,17 +38,15 @@ RegExp.escape= function(s) {
         // {'domain': 'archiveofourown.org', 'path': 'works/'},
         {
             'domain': 'literotica.com',
-            'path': /^\/s\//,
-            'place_img': function (image, link) {
-                link.parentNode.insertBefore(image, link);
-            }
+            'path': /^(?:\/beta)\/s\//,
+            'place_img': (image, link) => link.parentNode.insertBefore(image, link),
         },
         // {'domain': 'hentai-foundry.com', 'path': 'stories/'},
         // {'domain': 'hpfanficarchive.com', 'path': 'stories/viewstory.php'},
         {
             'domain': 'tthfanfic.org',
             'path': /^\/Story-\d+\//,
-            'place_img': function (image, link) {
+            'place_img': (image, link) => {
                 let node = link.parentNode.parentNode;
                 if (node.link_changer_set)
                     return;

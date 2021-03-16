@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Fiction_Sender Options</title>
-    <style type="text/css">
-        html, body { background: WindowFrame; color: WindowText; width: 100%; height: 100%; margin: 0; }
-    </style>
 </head>
 <body>
     <form>
-        <div class="browser-style">
-            <label for="targetUrl">Post url to:</label>
-            <input name="targetUrl" type="url" id="targetUrl" value="http://localhost/" />
-            <br />
-            <button type="submit">Save</button>
+        <div class="panel-section panel-section-formElements">
+            <div class="panel-formElements-item">
+                <label for="targetUrl">Post url to:</label>
+                <input name="targetUrl" type="url" id="targetUrl" value="http://localhost/" />
+            </div>
+            <button type="submit" class="browser-style">Save</button>
         </div>
+        <script type="application/javascript" src="options.js"></script>
     </form>
-    <script type="application/javascript" src="options.js"></script>
 </body>
 </html>

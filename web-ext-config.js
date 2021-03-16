@@ -5,6 +5,7 @@ module.exports = {
         '.gitignore',
         '.sass-cache',
         'web-ext.js',
+        'web-ext-config.js',
         '*.zip',
         'icon_src',
     ],

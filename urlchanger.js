@@ -14,6 +14,7 @@ let supported_domain_paths = [
     {'domain': 'fanfiction.net', 'path': 's/'},
     {'domain': 'archiveofourown.org', 'path': 'works/'},
     {'domain': 'literotica.com', 'path': 's/'},
+    {'domain': 'literotica.com', 'path': 'beta/s/'},
     {'domain': 'hentai-foundry.com', 'path': 'stories/'},
     {'domain': 'hpfanficarchive.com', 'path': 'stories/viewstory.php'},
     {'domain': 'tthfanfic.org', 'path': 'Story-'},
