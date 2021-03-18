@@ -20,6 +20,7 @@ RegExp.escape= function(s) {
         return;
     }
     window.linkChangerHasRun = true;
+    const MIN_DOWNLOAD_ICON_SIZE = 50;
 
     let supported_domain_paths = [
         {
@@ -38,8 +39,11 @@ RegExp.escape= function(s) {
         // {'domain': 'archiveofourown.org', 'path': 'works/'},
         {
             'domain': 'literotica.com',
-            'path': /^(?:\/beta)\/s\//,
+            'path': /^(?:\/beta)?\/s\//,
             'place_img': (image, link) => link.parentNode.insertBefore(image, link),
+            'observe': () => {
+                return Array.from(document.querySelectorAll('.aL_mP')).map((d) => d.parentNode);
+            }
         },
         // {'domain': 'hentai-foundry.com', 'path': 'stories/'},
         // {'domain': 'hpfanficarchive.com', 'path': 'stories/viewstory.php'},
@@ -57,7 +61,7 @@ RegExp.escape= function(s) {
         },
     ];
     for (let domain of supported_domain_paths) {
-        domain.domain_regex = new RegExp(`^(?:(?:www|m)\\.)?${RegExp.escape(domain.domain)}$`, 'i');
+        domain.domain_regex = new RegExp(`^(?:(?:www|m|search)\\.)?${RegExp.escape(domain.domain)}$`, 'i');
         if (!domain.path instanceof RegExp) {
             domain.path = new RegExp('^/' + RegExp.escape(path));
         }
@@ -113,13 +117,14 @@ RegExp.escape= function(s) {
             icon_link.classList.add('fiction_sender_link');
 
             const size_rect = link.parentElement.getBoundingClientRect();
-            const size = Math.ceil(Math.min(size_rect.height, size_rect.width) * .8);
+            const size = Math.ceil(Math.max(Math.min(size_rect.height, size_rect.width) * .8, MIN_DOWNLOAD_ICON_SIZE));
             icon_link.style.height = size + 'px';
             icon_link.style.width = size + 'px';
             icon_link.style.marginRight = Math.floor(size / 3) + 'px';
 
             domain.place_img(icon_link, link);
         } else if (link.search === '') {
+            // console.log('link search:', link);
             let add = get_links_add(link);
             if (add)
                 link.search = add;
@@ -150,9 +155,21 @@ RegExp.escape= function(s) {
 
     let observer = new MutationObserver((mutations) => {
         for (let mutation of mutations) {
-            console.log('mutation:', mutation);
+            // console.log('mutation:', mutation);
+            mutation.addedNodes.forEach((elem) => {
+                elem.querySelectorAll('a:link').forEach((link) => {
+                    // console.log('link found:', link)
+                    add_to_link(link)
+                });
+            });
         }
     })
 
-    observer.observe(document.body, {childList: true});
+    let domain = get_supported_domain(window.location);
+    if (domain && domain.observe) {
+        let docs = domain.observe();
+        // console.log('now observing:', docs);
+        for (let doc of docs)
+            observer.observe(doc, {childList: true});
+    }
 })();
