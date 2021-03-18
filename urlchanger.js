@@ -13,7 +13,8 @@ RegExp.escape= function(s) {
 let supported_domain_paths = [
     {'domain': 'fanfiction.net', 'path': 's/'},
     {'domain': 'archiveofourown.org', 'path': 'works/'},
-    {'domain': 'literotica.com', 'path': /^(?:\/beta)\/s\//},
+    {'domain': 'literotica.com', 'path': 's/'},
+    {'domain': 'literotica.com', 'path': 'beta/s/'},
     {'domain': 'hentai-foundry.com', 'path': 'stories/'},
     {'domain': 'hpfanficarchive.com', 'path': 'stories/viewstory.php'},
     {'domain': 'tthfanfic.org', 'path': 'Story-'},
@@ -22,8 +23,6 @@ let supported_domain_paths = [
 ];
 for (let supported_domain_path of supported_domain_paths) {
     supported_domain_path.domain_regex = new RegExp(`^(?:(?:www|m)\\.)?${RegExp.escape(supported_domain_path.domain)}$`, 'i');
-    if (typeof supported_domain_path.path === 'string')
-        supported_domain_path.path = new RegExp('^/' + RegExp.escape(supported_domain_path.path), 'i')
 }
 
 
@@ -54,7 +53,7 @@ let start_download = function(data) {
     });
 }
 
-browser.runtime.bind('onMessage', (evt) => {
+browser.runtime.onMessage.addListener((evt) => {
     switch (evt.ACTION) {
         case 'download':
             start_download(evt.data);
@@ -67,7 +66,7 @@ browser.runtime.bind('onMessage', (evt) => {
 function is_story_url(url) {
     for (let supported_domain_path of supported_domain_paths) {
         if (supported_domain_path.domain_regex.test(url.hostname) &&
-            supported_domain_path.path.test(url.pathname)) {
+            url.pathname.startsWith('/' + supported_domain_path.path)) {
             // console.log('site is supported:', url);
             return true;
         }

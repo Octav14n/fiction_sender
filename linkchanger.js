@@ -24,7 +24,7 @@ RegExp.escape= function(s) {
     let supported_domain_paths = [
         {
             'domain': 'fanfiction.net',
-            'path': /^\/s\/\\d+\/1\//,
+            'path': /^\/s\/\d+\/1\//,
             'place_img': (image, link) => {
                 if (link.childNodes.length > 0 && link.childNodes[0].nodeType === Node.ELEMENT_NODE)
                     link.childNodes[0].style.clear = 'none';
@@ -101,6 +101,31 @@ RegExp.escape= function(s) {
         browser.runtime.sendMessage({ACTION: 'download', data: {url: url}});
     }
 
+    function add_to_link(link) {
+        let domain = get_supported_domain(link);
+        if (domain && domain.place_img && domain.path.test(link.pathname)) {
+            // console.log('link found:', link);
+            const icon_link = document.createElement('a');
+            //icon_link.setAttribute('href', url_to_link(link.href));
+            icon_link.setAttribute('title', 'open in converter');
+            icon_link.addEventListener('mousedown', start_download, false);
+            icon_link.dataset.url = link.href;
+            icon_link.classList.add('fiction_sender_link');
+
+            const size_rect = link.parentElement.getBoundingClientRect();
+            const size = Math.ceil(Math.min(size_rect.height, size_rect.width) * .8);
+            icon_link.style.height = size + 'px';
+            icon_link.style.width = size + 'px';
+            icon_link.style.marginRight = Math.floor(size / 3) + 'px';
+
+            domain.place_img(icon_link, link);
+        } else if (link.search === '') {
+            let add = get_links_add(link);
+            if (add)
+                link.search = add;
+        }
+    }
+
     for (let elem of document.getElementsByClassName('fiction_sender_link')) {
         elem.parentNode.removeChild(elem);
     }
@@ -119,29 +144,15 @@ RegExp.escape= function(s) {
 
     document.head.append(css);
 
-    for (const link of Array.from(document.links)) {
-        let domain = get_supported_domain(link);
-        if (domain.place_img && is_story_url(link)) {
-            // console.log('link found:', link);
-            const icon_link = document.createElement('a');
-            //icon_link.setAttribute('href', url_to_link(link.href));
-            icon_link.setAttribute('title', 'open in converter');
-            icon_link.addEventListener('mousedown', start_download, false);
-            icon_link.dataset.url = link.href;
-            icon_link.classList.add('fiction_sender_link');
-
-            const size_rect = link.parentElement.getBoundingClientRect();
-            const size = Math.ceil(Math.min(size_rect.height, size_rect.width) * .8);
-            icon_link.style.height = size + 'px';
-            icon_link.style.width = size + 'px';
-            icon_link.style.marginRight = Math.floor(size / 3) + 'px';
-
-            domain.place_img(icon_link, link);
-        } else if (link.search === '') {
-            // console.log('add found:', link);
-            let add = get_links_add(link);
-            if (add)
-                link.search = add;
-        }
+    for (let link of Array.from(document.links)) {
+        add_to_link(link);
     }
+
+    let observer = new MutationObserver((mutations) => {
+        for (let mutation of mutations) {
+            console.log('mutation:', mutation);
+        }
+    })
+
+    observer.observe(document.body, {childList: true});
 })();
