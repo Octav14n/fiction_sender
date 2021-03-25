@@ -42,7 +42,9 @@ RegExp.escape= function(s) {
             'path': /^(?:\/beta)?\/s\//,
             'place_img': (image, link) => link.parentNode.insertBefore(image, link),
             'observe': () => {
-                return Array.from(document.querySelectorAll('.aL_mP')).map((d) => d.parentNode);
+                return Array.from(document.querySelectorAll('.aL_mP')).map((d) => d.parentNode).concat(
+                    document.querySelectorAll('*[style="display:content"]')
+                );
             }
         },
         // {'domain': 'hentai-foundry.com', 'path': 'stories/'},
@@ -106,6 +108,7 @@ RegExp.escape= function(s) {
     }
 
     function add_to_link(link) {
+        if (link.domain === window.location.domain && link.pathname === window.location.pathname) return;
         let domain = get_supported_domain(link);
         if (domain && domain.place_img && domain.path.test(link.pathname)) {
             // console.log('link found:', link);
