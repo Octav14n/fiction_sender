@@ -11,6 +11,8 @@ document.getElementsByTagName('form')[0].addEventListener('submit', function (ev
         browser.storage.sync.set({
             targetUrl: url
         });
+    }).catch((err) => {
+        window.console.error(err);
     });
     evt.preventDefault();
 })

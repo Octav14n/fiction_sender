@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Fiction Sender",
-  "version": "1.17",
+  "version": "1.18",
   "applications": {
     "gecko": {
       "id": "fiction_sender@schnuff.eu"
@@ -16,7 +16,7 @@
   },
 
   "permissions": [
-    "*://*.fanfiction.net/s/*",
+    "*://*/*",
     "storage",
     "tabs",
     "history"

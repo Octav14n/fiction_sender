@@ -21,5 +21,9 @@ module.exports = {
             'https://www.royalroad.com/fiction/21501/dco--dungeon-core-online',
             'about:devtools-toolbox?id=fiction_sender%40schnuff.eu&type=extension',
         ],
+        browserConsole: true,
+    },
+    sign: {
+        channel: "listed",
     }
 }

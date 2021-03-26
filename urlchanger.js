@@ -83,7 +83,7 @@ browser.pageAction.onClicked.addListener(convertActive);
 
 function initializePageAction(prevId, changeInfo, tab) {
     if (!tab) return;
-    window.console.debug(tab);
+    // window.console.debug(tab);
     let url = new URL(tab.url);
     if (is_story_url(url)) {
         browser.pageAction.show(tab.id);
