@@ -18,6 +18,6 @@ document.getElementsByTagName('form')[0].addEventListener('submit', function (ev
 })
 document.addEventListener('DOMContentLoaded', function (evt) {
     browser.storage.sync.get('targetUrl').then((res) => {
-        targetUrl().value = res.targetUrl || 'http://localhost/';
+        targetUrl().value = res.targetUrl || '';
     })
 });

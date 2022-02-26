@@ -152,27 +152,32 @@ RegExp.escape= function(s) {
 
     document.head.append(css);
 
-    for (let link of Array.from(document.links)) {
-        add_to_link(link);
-    }
+    browser.storage.sync.get('targetUrl').then((res) => {
+        if (res.targetUrl === undefined || res.targetUrl === '') return;
 
-    let observer = new MutationObserver((mutations) => {
-        for (let mutation of mutations) {
-            // console.log('mutation:', mutation);
-            mutation.addedNodes.forEach((elem) => {
-                elem.querySelectorAll('a:link').forEach((link) => {
-                    // console.log('link found:', link)
-                    add_to_link(link)
-                });
-            });
+        
+        for (let link of Array.from(document.links)) {
+            add_to_link(link);
         }
-    })
 
-    let domain = get_supported_domain(window.location);
-    if (domain && domain.observe) {
-        let docs = domain.observe();
-        // console.log('now observing:', docs);
-        for (let doc of docs)
-            observer.observe(doc, {childList: true});
-    }
+        let observer = new MutationObserver((mutations) => {
+            for (let mutation of mutations) {
+                // console.log('mutation:', mutation);
+                mutation.addedNodes.forEach((elem) => {
+                    elem.querySelectorAll('a:link').forEach((link) => {
+                        // console.log('link found:', link)
+                        add_to_link(link)
+                    });
+                });
+            }
+        })
+
+        let domain = get_supported_domain(window.location);
+        if (domain && domain.observe) {
+            let docs = domain.observe();
+            // console.log('now observing:', docs);
+            for (let doc of docs)
+                observer.observe(doc, {childList: true});
+        }
+    });
 })();

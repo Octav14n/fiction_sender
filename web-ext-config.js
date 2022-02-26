@@ -4,6 +4,7 @@ module.exports = {
         'word_highlighter.css.map',
         '.gitignore',
         '.sass-cache',
+        '.idea',
         'web-ext.js',
         'web-ext-config.js',
         '*.zip',
